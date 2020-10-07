@@ -309,8 +309,8 @@
 
     /* Sound running functions */
 
-    function updateVolumeActual() {
-        volumeActual = Math.round(volumeMin + ((volumeMax - volumeMin) * (volumeRange / 100)));
+    function updateVolumeActual(volumeRange, volumeRangeSize=100) {
+        volumeActual = Math.round(volumeMin + ((volumeMax - volumeMin) * (volumeRange / volumeRangeSize)));
         $("#volume-result").val(volumeActual);
 
         if (soundEnabled) {
@@ -330,8 +330,8 @@
         }
     }
 
-    function updatePitchActual() {
-        pitchActual = Math.round(pitchMin + ((pitchMax - pitchMin) * (pitchRange / 100)));
+    function updatePitchActual(pitchRange, pitchRangeSize=100) {
+        pitchActual = Math.round(pitchMin + ((pitchMax - pitchMin) * (pitchRange / pitchRangeSize)));
         $("#pitch-result").val(pitchActual + " Hz");
 
         if (soundEnabled) {
@@ -362,6 +362,20 @@
         p_x = p_x + v_x * a_i;
         p_y = p_y + v_y * a_i;
 
+        if (p_x < 0)
+            p_x = 0;
+        else if (p_x > 10)
+            p_x = 10;
+
+        updatePitchActual(p_x, 10);
+
+        if (p_y < 0)
+            p_y = 0;
+        else if (p_y > 10)
+            p_y = 10;
+
+        updateVolumeActual(p_y, 10);
+
         $("#x-MTM").val(a_x + " ms2");
         $("#y-MTM").val(a_y + " ms2");
         $("#i-MTM").val(a_i + " ms2");
@@ -373,7 +387,6 @@
     }
 
     accessRequestFault = false;
-    MTS_isRunning = false;
 
     $("#slider-music-MTM").click(function (e) {
         if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
@@ -387,12 +400,20 @@
             })
         }
 
-        if ($("slider-music-MTM").prop("checked")) {
-            window.removeEventListener("devicemotion", motionHandler);
-            MTS_isRunning = false;
-        } else {
+        if ($("#slider-music-MTM").prop("checked")) {
             window.addEventListener("devicemotion", motionHandler);
-            MTS_isRunning = true;
+            if (volumeActual > 0)
+                soundRunning = true
+            if (soundRunning) {
+                synth.triggerAttack(pitchActual, now);
+                synth.volume.rampTo(volumeActual, 0.1);
+            }
+            soundEnabled = true;
+        } else {
+            window.removeEventListener("devicemotion", motionHandler);
+            synth.triggerRelease(now);
+            soundEnabled = false;
+            soundRunning = false;
         }
     })
 
@@ -402,12 +423,12 @@
 
     $(document).on("input", '#volume-range', function () {
         volumeRange = $(this).val();
-        updateVolumeActual();
+        updateVolumeActual(volumeRange, 100);
     });
 
     $(document).on("input", '#pitch-range', function () {
         pitchRange = $(this).val();
-        updatePitchActual();
+        updatePitchActual(pitchRange, 100);
     });
 
     $(document).on("input", '#pitch-min', function () {
