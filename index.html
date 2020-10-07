@@ -141,14 +141,14 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="x-MTM">accel-x</label>
+                                                <label for="x-MTM">Accel-x</label>
                                                 <input type="text" class="form-control" id="x-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="y-MTM">accel-y</label>
+                                                <label for="y-MTM">Accel-y</label>
                                                 <input type="text" class="form-control" id="y-MTM" value="0"
                                                        readonly>
                                             </div>
@@ -157,14 +157,14 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="z-MTM">accel-z</label>
-                                                <input type="text" class="form-control" id="z-MTM" value="0"
+                                                <label for="d-MTM">Datapoints</label>
+                                                <input type="text" class="form-control" id="d-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="i-MTM">interval</label>
+                                                <label for="i-MTM">Interval</label>
                                                 <input type="text" class="form-control" id="i-MTM" value="0"
                                                        readonly>
                                             </div>
@@ -186,6 +186,22 @@
                                             <div class="form-group">
                                                 <label for="pitch-result-MTM">Pitch</label>
                                                 <input type="text" class="form-control" id="pitch-result-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="d-MTM">Position x</label>
+                                                <input type="text" class="form-control" id="px-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="i-MTM">Position y</label>
+                                                <input type="text" class="form-control" id="py-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -283,6 +299,7 @@
         $("#pitch-max").val(pitchMax);
         $("#pitch-range").val(pitchRange);
         $("#pitch-result").val(pitchActual + " Hz");
+        $("#d-MTM").val(datapoints);
     })
 
     $("#nav-MTM-tab").on("click", function (e) {
@@ -326,35 +343,48 @@
 
     var a_x;
     var a_y;
-    var a_z;
     var a_i;
+    var datapoints = 0;
+
+    var v_x = 0;
+    var p_x = 0;
+
+    var v_y = 0;
+    var p_y = 0;
 
     function motionHandler(event) {
         a_x = event.acceleration.x;
         a_y = event.acceleration.y;
-        a_z = event.acceleration.z;
         a_i = event.interval;
+
+        v_x = v_x + a_x * a_i;
+        v_y = v_y + a_y * a_i;
+        p_x = p_x + v_x * a_i;
+        p_y = p_y + v_y * a_i;
 
         $("#x-MTM").val(a_x + " ms2");
         $("#y-MTM").val(a_y + " ms2");
-        $("#z-MTM").val(a_z + " ms2");
         $("#i-MTM").val(a_i + " ms2");
+        $("#px-MTM").value(p_x);
+        $("#py-MTM").value(p_y);
+
+        datapoints = parseInt($("#d-MTM").val()) + 1;
+        $("#d-MTM").val(datapoints);
     }
 
+    accessRequestFault = false;
     MTS_isRunning = false;
 
     $("#slider-music-MTM").click(function (e) {
-        if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
+        if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
             DeviceMotionEvent.requestPermission().then( response => {
                 // (optional) Do something after API prompt dismissed.
-                if ( response === "granted" ) {
-                    alert("holy fuck")
-                } else {
-                    alert("nog meer kanker")
+                if ( response !== "granted" ) {
+                    alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
+                    alert("This application requires data from the accelerometer to function correctly.");
+                    accessRequestFault = true;
                 }
             })
-        } else {
-            alert("kankerzooi");
         }
 
         if ($("slider-music-MTM").prop("checked")) {
