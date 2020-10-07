@@ -193,14 +193,14 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="d-MTM">Position x</label>
+                                                <label for="px-MTM">Position x</label>
                                                 <input type="text" class="form-control" id="px-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="i-MTM">Position y</label>
+                                                <label for="py-MTM">Position y</label>
                                                 <input type="text" class="form-control" id="py-MTM" value="0"
                                                        readonly>
                                             </div>
@@ -365,8 +365,8 @@
         $("#x-MTM").val(a_x + " ms2");
         $("#y-MTM").val(a_y + " ms2");
         $("#i-MTM").val(a_i + " ms2");
-        $("#px-MTM").value(p_x);
-        $("#py-MTM").value(p_y);
+        $("#px-MTM").val(p_x);
+        $("#py-MTM").val(p_y);
 
         datapoints = parseInt($("#d-MTM").val()) + 1;
         $("#d-MTM").val(datapoints);
