@@ -433,12 +433,12 @@
 
     $(document).on("input", '#pitch-min', function () {
         pitchMin = parseInt($(this).val());
-        updatePitchActual();
+        updatePitchActual(pitchRange, 100);
     });
 
     $(document).on("input", '#pitch-max', function () {
         pitchMax = parseInt($(this).val());
-        updatePitchActual();
+        updatePitchActual(pitchRange, 100);
     });
 
     /* Slider run function */
