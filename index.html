@@ -17,6 +17,7 @@
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.61/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <title>ThereMove</title>
 </head>
 <body>
@@ -54,14 +55,14 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-min">Pitch-minimum</label>
-                                                <input type="number" class="form-control" id="pitch-min" value="0"
+                                                <input type="number" class="form-control pitch-min" id="pitch-min" value="0"
                                                        min="0">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-max">Pitch-maximum</label>
-                                                <input type="number" class="form-control" id="pitch-max" value="100"
+                                                <input type="number" class="form-control pitch-max" id="pitch-max" value="100"
                                                        min="0">
                                             </div>
                                         </div>
@@ -90,7 +91,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="volume-result">Volume</label>
-                                                <input type="text" class="form-control" id="volume-result" value="0"
+                                                <input type="text" class="form-control volume-data" id="volume-result" value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -99,7 +100,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="pitch-result">Pitch</label>
-                                                <input type="text" class="form-control" id="pitch-result" value="0"
+                                                <input type="text" class="form-control pitch-data" id="pitch-result" value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -126,14 +127,14 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-min-MTM">Pitch-minimum</label>
-                                                <input type="number" class="form-control" id="pitch-min-MTM" value="0"
+                                                <input type="number" class="form-control pitch-min" id="pitch-min-MTM" value="0"
                                                        min="0">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-max-MTM">Pitch-maximum</label>
-                                                <input type="number" class="form-control" id="pitch-max-MTM" value="100"
+                                                <input type="number" class="form-control pitch-max" id="pitch-max-MTM" value="100"
                                                        min="0">
                                             </div>
                                         </div>
@@ -157,35 +158,15 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="d-MTM">Datapoints</label>
-                                                <input type="text" class="form-control" id="d-MTM" value="0"
+                                                <label for="vx-MTM">Speed-x</label>
+                                                <input type="text" class="form-control" id="vx-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="i-MTM">Interval</label>
-                                                <input type="text" class="form-control" id="i-MTM" value="0"
-                                                       readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="volume-result-MTM">Volume</label>
-                                                <input type="text" class="form-control" id="volume-result-MTM" value="0"
-                                                       readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="pitch-result-MTM">Pitch</label>
-                                                <input type="text" class="form-control" id="pitch-result-MTM" value="0"
+                                                <label for="vy-MTM">Speed-y</label>
+                                                <input type="text" class="form-control" id="vy-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -206,6 +187,42 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="volume-result-MTM">Volume</label>
+                                                <input type="text" class="form-control volume-data" id="volume-result-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="pitch-result-MTM">Pitch</label>
+                                                <input type="text" class="form-control pitch-data" id="pitch-result-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="d-MTM">Datapoints</label>
+                                                <input type="text" class="form-control" id="d-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="i-MTM">Interval</label>
+                                                <input type="text" class="form-control" id="i-MTM" value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="custom-control custom-switch">
@@ -221,8 +238,12 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab">Movement to
-                        Data
+                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab">
+                        <div class="jumbotron">
+                            <canvas id="movementDataChart" style="width: 100%; height: auto;">
+                                <h1>Sorry, your browser does not support the canvas element :(</h1>
+                            </canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -271,6 +292,52 @@
 </body>
 </html>
 <script>
+    var chartLabels = new Array(200)
+    for (var i = 0; i < chartLabels.length; i++) {chartLabels[i] = i + 1;}
+
+    var chartField = $("#movementDataChart")[0].getContext("2d");
+    var chart = new Chart(chartField, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: chartLabels,
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    // backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45]
+                },
+                {
+                    label: 'My Second dataset',
+                    // backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(50, 168, 82)',
+                    data: [0, 10, -9, -7, 5, 45, -2]
+                }
+            ]
+        },
+
+        // Configuration options go here
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        suggestedMin: -50,
+                        suggestedMax: 50
+                    }
+                }],
+                xAxes: [{
+                    display: false
+                }]
+            }
+        }
+    });
+
+    const synth = new Tone.Synth().toDestination();
+    const now = Tone.now()
+
     const volumeMax = 10;
     const volumeMin = 0;
     var volumeRange = 100;
@@ -281,9 +348,6 @@
     var pitchRange = 0;
     var pitchActual = 0;
 
-    const synth = new Tone.Synth().toDestination();
-    const now = Tone.now()
-
     var soundEnabled = false;
     var soundRunning = false;
 
@@ -292,19 +356,66 @@
     $(document).ready(function () {
         $("#on-startup-modal").modal();
 
-        $("#volume-range").val(volumeRange);
-        $("#volume-result").val(volumeActual);
-
-        $("#pitch-min").val(pitchMin);
-        $("#pitch-max").val(pitchMax);
-        $("#pitch-range").val(pitchRange);
-        $("#pitch-result").val(pitchActual + " Hz");
-        $("#d-MTM").val(datapoints);
+        reset();
     })
 
-    $("#nav-MTM-tab").on("click", function (e) {
+    function updateSlidersFields() {
+        $("#volume-range").val(volumeRange);
+        $("#pitch-range").val(pitchRange);
+    }
+
+    function updateMovementToSoundFields() {
+        $("#x-MTM").val(a_x + " ms2");
+        $("#y-MTM").val(a_y + " ms2");
+        $("#i-MTM").val(a_i + " msec");
+        $("#vy-MTM").val(v_y + " ms");
+        $("#vx-MTM").val(v_x + " ms");
+        $("#px-MTM").val(p_x);
+        $("#py-MTM").val(p_y);
+        $("#d-MTM").val(datapoints);
+    }
+
+    function reset() {
+        // Reset sliders
+        $("#slider-music-MTM").prop('checked', false);
         $("#slider-music").prop('checked', false);
+
+        // Reset sound control
+        soundEnabled = false;
+        soundRunning = false;
+
+        // Reset JS variables
+        volumeRange = 100;
+        volumeActual = 10;
+        pitchRange = 0;
+        pitchMax = 500;
+        pitchMin = 0;
+        pitchActual = 0;
+
+        // Reset movement variables
+        datapoints = 0;
+        p_x = 0;
+        p_y = 0;
+        v_x = 0;
+        v_y = 0;
+        a_x = 0;
+        a_y = 0;
+        a_i = 0;
+
+        // Reset DOM fields
+        updateSlidersFields();
+        updateMovementToSoundFields();
+        $(".volume-data").val(volumeActual);
+        $(".pitch-min").val(pitchMin);
+        $(".pitch-max").val(pitchMax);
+        $(".pitch-data").val(pitchActual + " Hz");
+
         sliderPage();
+        movementToSoundPage();
+    }
+
+    $("#nav-MTM-tab").on("click", function (e) {
+        reset();
     })
 
     /* Sound running functions */
@@ -367,41 +478,36 @@
         else if (p_x > 10)
             p_x = 10;
 
-        updatePitchActual(p_x, 10);
-
         if (p_y < 0)
             p_y = 0;
         else if (p_y > 10)
             p_y = 10;
 
-        updateVolumeActual(p_y, 10);
-
-        $("#x-MTM").val(a_x + " ms2");
-        $("#y-MTM").val(a_y + " ms2");
-        $("#i-MTM").val(a_i + " ms2");
-        $("#px-MTM").val(p_x);
-        $("#py-MTM").val(p_y);
-
         datapoints += 1;
-        $("#d-MTM").val(datapoints);
     }
 
     accessRequestFault = false;
 
-    $("#slider-music-MTM").click(function (e) {
-        if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
-            DeviceMotionEvent.requestPermission().then( response => {
-                // (optional) Do something after API prompt dismissed.
-                if ( response !== "granted" ) {
-                    alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
-                    alert("This application requires data from the accelerometer to function correctly.");
-                    accessRequestFault = true;
-                }
-            })
-        }
-
+    function movementToSoundPage() {
         if ($("#slider-music-MTM").prop("checked")) {
+            if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
+                DeviceMotionEvent.requestPermission().then( response => {
+                    // (optional) Do something after API prompt dismissed.
+                    if ( response !== "granted" ) {
+                        alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
+                        alert("This application requires data from the accelerometer to function correctly.");
+                        accessRequestFault = true;
+                    }
+                })
+            }
+
             window.addEventListener("devicemotion", motionHandler);
+
+            updatePitchActual(p_x * 10);
+            updateVolumeActual(p_y * 10);
+
+            updateMovementToSoundFields();
+
             if (volumeActual > 0)
                 soundRunning = true
             if (soundRunning) {
@@ -415,28 +521,32 @@
             soundEnabled = false;
             soundRunning = false;
         }
+    }
+
+    $("#slider-music-MTM").click(function (e) {
+        movementToSoundPage();
     })
 
     /* SLIDER */
 
     /* Data fetching from the slider section */
 
-    $(document).on("input", '#volume-range', function () {
+    $(document).on("input", "#volume-range", function () {
         volumeRange = $(this).val();
         updateVolumeActual(volumeRange, 100);
     });
 
-    $(document).on("input", '#pitch-range', function () {
+    $(document).on("input", "#pitch-range", function () {
         pitchRange = $(this).val();
         updatePitchActual(pitchRange, 100);
     });
 
-    $(document).on("input", '#pitch-min', function () {
+    $(document).on("input", ".pitch-min", function () {
         pitchMin = parseInt($(this).val());
         updatePitchActual(pitchRange, 100);
     });
 
-    $(document).on("input", '#pitch-max', function () {
+    $(document).on("input", ".pitch-max", function () {
         pitchMax = parseInt($(this).val());
         updatePitchActual(pitchRange, 100);
     });
