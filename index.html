@@ -461,7 +461,7 @@
 
     function updateVolumeActual(volumeRange, volumeRangeSize = 100) {
         volumeActual = Math.round(volumeMin + ((volumeMax - volumeMin) * (volumeRange / volumeRangeSize)));
-        $("#volume-result").val(volumeActual);
+        $(".volume-data").val(volumeActual);
 
         if (soundEnabled) {
             if (volumeActual === 0) {
@@ -482,7 +482,7 @@
 
     function updatePitchActual(pitchRange, pitchRangeSize = 100) {
         pitchActual = Math.round(pitchMin + ((pitchMax - pitchMin) * (pitchRange / pitchRangeSize)));
-        $("#pitch-result").val(pitchActual + " Hz");
+        $(".pitch-data").val(pitchActual + " Hz");
 
         if (soundEnabled) {
             synth.frequency.rampTo(pitchActual, 0.1);
@@ -651,19 +651,19 @@
         updateVolumeActual(p_y * 10);
 
         updateMovementToSoundFields();
-
-        if (volumeActual > 0)
-            soundRunning = true
-        if (soundRunning) {
-            synth.triggerAttack(pitchActual, now);
-            synth.volume.rampTo(volumeActual, 0.1);
-        }
-        soundEnabled = true;
     }
 
     function movementToSoundPage() {
         if ($("#slider-music-MTM").prop("checked")) {
             requestMotionPermission();
+
+            if (volumeActual > 0)
+                soundRunning = true
+            if (soundRunning) {
+                synth.triggerAttack(pitchActual, now);
+                synth.volume.rampTo(volumeActual, 0.1);
+            }
+            soundEnabled = true;
 
             window.addEventListener("devicemotion", motionToSoundHandler);
         } else {
