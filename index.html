@@ -42,27 +42,29 @@
 </header>
 
 <main>
-    <div class="container" style="margin-top: 20px">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tab-content" id="nav-tabContent">
+    <div class="container" style="margin-top: 20px; margin-bottom: 20px; height: 100%;">
+        <div class="row" style="height: 100%;">
+            <div class="col-md-12" style="height: 100%;">
+                <div class="tab-content" id="nav-tabContent" style="height: 100%;">
 
-                    <div class="tab-pane fade show active" id="nav-STM" role="tabpanel" aria-labelledby="nav-STM-tab">
-                        <div class="jumbotron">
+                    <div class="tab-pane fade show active" id="nav-STM" role="tabpanel" aria-labelledby="nav-STM-tab" style="height: 100%;">
+                        <div class="jumbotron" style="height: 100%;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-min">Pitch-minimum</label>
-                                                <input type="number" class="form-control pitch-min" id="pitch-min" value="0"
+                                                <input type="number" class="form-control pitch-min" id="pitch-min"
+                                                       value="0"
                                                        min="0">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-max">Pitch-maximum</label>
-                                                <input type="number" class="form-control pitch-max" id="pitch-max" value="100"
+                                                <input type="number" class="form-control pitch-max" id="pitch-max"
+                                                       value="100"
                                                        min="0">
                                             </div>
                                         </div>
@@ -91,7 +93,8 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="volume-result">Volume</label>
-                                                <input type="text" class="form-control volume-data" id="volume-result" value="0"
+                                                <input type="text" class="form-control volume-data" id="volume-result"
+                                                       value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -100,7 +103,8 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="pitch-result">Pitch</label>
-                                                <input type="text" class="form-control pitch-data" id="pitch-result" value="0"
+                                                <input type="text" class="form-control pitch-data" id="pitch-result"
+                                                       value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -119,22 +123,24 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="nav-MTM" role="tabpanel" aria-labelledby="nav-MTM-tab">
-                        <div class="jumbotron">
+                    <div class="tab-pane fade" id="nav-MTM" role="tabpanel" aria-labelledby="nav-MTM-tab" style="height: 100%;">
+                        <div class="jumbotron" style="height: 100%;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-min-MTM">Pitch-minimum</label>
-                                                <input type="number" class="form-control pitch-min" id="pitch-min-MTM" value="0"
+                                                <input type="number" class="form-control pitch-min" id="pitch-min-MTM"
+                                                       value="0"
                                                        min="0">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="pitch-max-MTM">Pitch-maximum</label>
-                                                <input type="number" class="form-control pitch-max" id="pitch-max-MTM" value="100"
+                                                <input type="number" class="form-control pitch-max" id="pitch-max-MTM"
+                                                       value="100"
                                                        min="0">
                                             </div>
                                         </div>
@@ -193,7 +199,8 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="volume-result-MTM">Volume</label>
-                                                <input type="text" class="form-control volume-data" id="volume-result-MTM" value="0"
+                                                <input type="text" class="form-control volume-data"
+                                                       id="volume-result-MTM" value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -202,7 +209,8 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="pitch-result-MTM">Pitch</label>
-                                                <input type="text" class="form-control pitch-data" id="pitch-result-MTM" value="0"
+                                                <input type="text" class="form-control pitch-data" id="pitch-result-MTM"
+                                                       value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -238,13 +246,24 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab">
-                        <div class="jumbotron">
+                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab" style="height: 100%">
+                        <div class="jumbotron" style="height: 100%">
+                            <div class="row" style="height: 100%;">
+                                <div class="col-12" style="height: 100%;">
+                                    <canvas id="movementDataChart" style="width: 100%; height: auto;">
+                                        <h1>Sorry, your browser does not support the canvas element :(</h1>
+                                    </canvas>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-12">
-                            <canvas id="movementDataChart" style="width: 100%; height: auto;">
-                                <h1>Sorry, your browser does not support the canvas element :(</h1>
-                            </canvas>
+                                <div class="col-md-4 text-center">
+                                    <button type="button" class="btn btn-danger btn-sm" style="width: 50%; align-content: center;" id="accel-btn">Acceleration</button>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button type="button" class="btn btn-outline-warning btn-sm" style="width: 50%; align-content: center;" id="speed-btn">Speed</button>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <button type="button" class="btn btn-outline-success btn-sm" style="width: 50%; align-content: center;" id="pos-btn">Position</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -308,24 +327,26 @@
 <script>
     const chartSize = 200;
     var chartLabels = new Array(chartSize);
-    for (var i = 0; i < chartLabels.length; i++) {chartLabels[i] = i + 1;}
+    for (var i = 0; i < chartLabels.length; i++) {
+        chartLabels[i] = i + 1;
+    }
 
     var chartField = $("#movementDataChart")[0].getContext("2d");
     var chart = new Chart(chartField, {
         // The type of chart we want to create
-        type: 'line',
+        type: "line",
 
         // The data for our dataset
         data: {
             labels: chartLabels,
             datasets: [
                 {
-                    label: 'Acceleration x',
+                    label: "Acceleration X",
                     borderColor: 'rgb(255, 99, 132)',
                     data: []
                 },
                 {
-                    label: 'Acceleration y',
+                    label: "Acceleration Y",
                     borderColor: 'rgb(50, 168, 82)',
                     data: []
                 }
@@ -438,7 +459,7 @@
 
     /* Sound running functions */
 
-    function updateVolumeActual(volumeRange, volumeRangeSize=100) {
+    function updateVolumeActual(volumeRange, volumeRangeSize = 100) {
         volumeActual = Math.round(volumeMin + ((volumeMax - volumeMin) * (volumeRange / volumeRangeSize)));
         $("#volume-result").val(volumeActual);
 
@@ -459,7 +480,7 @@
         }
     }
 
-    function updatePitchActual(pitchRange, pitchRangeSize=100) {
+    function updatePitchActual(pitchRange, pitchRangeSize = 100) {
         pitchActual = Math.round(pitchMin + ((pitchMax - pitchMin) * (pitchRange / pitchRangeSize)));
         $("#pitch-result").val(pitchActual + " Hz");
 
@@ -506,10 +527,10 @@
     accessRequestFault = false;
 
     function requestMotionPermission() {
-        if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
-            DeviceMotionEvent.requestPermission().then( response => {
+        if (!accessRequestFault && typeof (DeviceMotionEvent) !== "undefined" && typeof (DeviceMotionEvent.requestPermission) === "function") {
+            DeviceMotionEvent.requestPermission().then(response => {
                 // (optional) Do something after API prompt dismissed.
-                if ( response !== "granted" ) {
+                if (response !== "granted") {
                     alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
                     alert("This application requires data from the accelerometer to function correctly.");
                     accessRequestFault = true;
@@ -520,16 +541,38 @@
 
     /* MOTION TO DATA */
 
+    mapAccel = true;
+    mapSpeed = false;
+    mapPos = false;
+
+    function resetChart() {
+        chart.data.datasets[0].data = [];
+        chart.data.datasets[1].data = [];
+
+        chart.update();
+    }
+
+    function setChartSize(size = 50) {
+        chart.options.scales.yAxes[0].ticks.suggestedMax = size;
+        chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
+    }
+
     function motionToDataHandler(event) {
         motionHandler(event);
 
-        if (chart.data.datasets[0].data.length > chartSize)
-            chart.data.datasets[0].data = [];
-        if (chart.data.datasets[1].data.length > chartSize)
-            chart.data.datasets[1].data = [];
+        if (chart.data.datasets[0].data.length > chartSize || chart.data.datasets[1].data.length > chartSize)
+            resetChart();
 
-        chart.data.datasets[0].data.push(a_x);
-        chart.data.datasets[1].data.push(a_y);
+        if (mapAccel) {
+            chart.data.datasets[0].data.push(a_x);
+            chart.data.datasets[1].data.push(a_y);
+        } else if (mapSpeed) {
+            chart.data.datasets[0].data.push(v_x);
+            chart.data.datasets[1].data.push(v_y);
+        } else if (mapPos) {
+            chart.data.datasets[0].data.push(p_x);
+            chart.data.datasets[1].data.push(p_y);
+        }
 
         chart.update();
     }
@@ -546,6 +589,57 @@
 
     $("#slider-data-MTD").click(function (e) {
         movementToDataPage();
+    })
+
+    $("#accel-btn").click(function (e) {
+        e.preventDefault();
+        $(this).removeClass("btn-outline-danger").addClass("btn-danger");
+        $("#speed-btn").removeClass("btn-warning").addClass("btn-outline-warning");
+        $("#pos-btn").removeClass("btn-success").addClass("btn-outline-success");
+
+        chart.data.datasets[0].label = "Acceleration X";
+        chart.data.datasets[1].label = "Acceleration Y";
+
+        mapAccel = true;
+        mapSpeed = false;
+        mapPos = false;
+
+        setChartSize(1);
+        resetChart();
+    })
+
+    $("#speed-btn").click(function (e) {
+        e.preventDefault();
+        $(this).removeClass("btn-outline-warning").addClass("btn-warning");
+        $("#accel-btn").removeClass("btn-danger").addClass("btn-outline-danger");
+        $("#pos-btn").removeClass("btn-success").addClass("btn-outline-success");
+
+        chart.data.datasets[0].label = "Speed X";
+        chart.data.datasets[1].label = "Speed Y";
+
+        mapAccel = false;
+        mapSpeed = true;
+        mapPos = false;
+
+        setChartSize(50);
+        resetChart();
+    })
+
+    $("#pos-btn").click(function (e) {
+        e.preventDefault();
+        $(this).removeClass("btn-outline-success").addClass("btn-success");
+        $("#accel-btn").removeClass("btn-danger").addClass("btn-outline-danger");
+        $("#speed-btn").removeClass("btn-warning").addClass("btn-outline-warning");
+
+        chart.data.datasets[0].label = "Position X";
+        chart.data.datasets[1].label = "Position Y";
+
+        mapAccel = false;
+        mapSpeed = false;
+        mapPos = true;
+
+        setChartSize(10);
+        resetChart();
     })
 
     /* MOTION TO SOUND */
