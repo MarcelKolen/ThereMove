@@ -240,9 +240,23 @@
 
                     <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab">
                         <div class="jumbotron">
+                            <div class="row">
+                                <div class="col-12">
                             <canvas id="movementDataChart" style="width: 100%; height: auto;">
                                 <h1>Sorry, your browser does not support the canvas element :(</h1>
                             </canvas>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input"
+                                               id="slider-data-MTD">
+                                        <label class="custom-control-label" for="slider-data-MTD">Tracking
+                                            on/off</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -292,7 +306,8 @@
 </body>
 </html>
 <script>
-    var chartLabels = new Array(200)
+    const chartSize = 200;
+    var chartLabels = new Array(chartSize);
     for (var i = 0; i < chartLabels.length; i++) {chartLabels[i] = i + 1;}
 
     var chartField = $("#movementDataChart")[0].getContext("2d");
@@ -305,16 +320,14 @@
             labels: chartLabels,
             datasets: [
                 {
-                    label: 'My First dataset',
-                    // backgroundColor: 'rgb(255, 99, 132)',
+                    label: 'Acceleration x',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
+                    data: []
                 },
                 {
-                    label: 'My Second dataset',
-                    // backgroundColor: 'rgb(255, 99, 132)',
+                    label: 'Acceleration y',
                     borderColor: 'rgb(50, 168, 82)',
-                    data: [0, 10, -9, -7, 5, 45, -2]
+                    data: []
                 }
             ]
         },
@@ -324,8 +337,8 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        suggestedMin: -50,
-                        suggestedMax: 50
+                        suggestedMin: -1,
+                        suggestedMax: 1
                     }
                 }],
                 xAxes: [{
@@ -359,11 +372,6 @@
         reset();
     })
 
-    function updateSlidersFields() {
-        $("#volume-range").val(volumeRange);
-        $("#pitch-range").val(pitchRange);
-    }
-
     function updateMovementToSoundFields() {
         $("#x-MTM").val(a_x + " ms2");
         $("#y-MTM").val(a_y + " ms2");
@@ -376,7 +384,8 @@
     }
 
     function reset() {
-        // Reset sliders
+        // Reset checkboxes
+        $("#slider-data-MTD").prop('checked', false);
         $("#slider-music-MTM").prop('checked', false);
         $("#slider-music").prop('checked', false);
 
@@ -412,9 +421,18 @@
 
         sliderPage();
         movementToSoundPage();
+        movementToDataPage();
     }
 
+    $("#nav-STM-tab").on("click", function (e) {
+        reset();
+    })
+
     $("#nav-MTM-tab").on("click", function (e) {
+        reset();
+    })
+
+    $("#nav-MTD-tab").on("click", function (e) {
         reset();
     })
 
@@ -450,8 +468,7 @@
         }
     }
 
-    /* MOTION TO SOUND */
-
+    /* Motion setup */
     var a_x;
     var a_y;
     var a_i;
@@ -488,35 +505,75 @@
 
     accessRequestFault = false;
 
+    function requestMotionPermission() {
+        if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
+            DeviceMotionEvent.requestPermission().then( response => {
+                // (optional) Do something after API prompt dismissed.
+                if ( response !== "granted" ) {
+                    alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
+                    alert("This application requires data from the accelerometer to function correctly.");
+                    accessRequestFault = true;
+                }
+            })
+        }
+    }
+
+    /* MOTION TO DATA */
+
+    function motionToDataHandler(event) {
+        motionHandler(event);
+
+        if (chart.data.datasets[0].data.length > chartSize)
+            chart.data.datasets[0].data = [];
+        if (chart.data.datasets[1].data.length > chartSize)
+            chart.data.datasets[1].data = [];
+
+        chart.data.datasets[0].data.push(a_x);
+        chart.data.datasets[1].data.push(a_y);
+
+        chart.update();
+    }
+
+    function movementToDataPage() {
+        if ($("#slider-data-MTD").prop("checked")) {
+            requestMotionPermission();
+
+            window.addEventListener("devicemotion", motionToDataHandler);
+        } else {
+            window.removeEventListener("devicemotion", motionToDataHandler);
+        }
+    }
+
+    $("#slider-data-MTD").click(function (e) {
+        movementToDataPage();
+    })
+
+    /* MOTION TO SOUND */
+
+    function motionToSoundHandler(event) {
+        motionHandler(event);
+
+        updatePitchActual(p_x * 10);
+        updateVolumeActual(p_y * 10);
+
+        updateMovementToSoundFields();
+
+        if (volumeActual > 0)
+            soundRunning = true
+        if (soundRunning) {
+            synth.triggerAttack(pitchActual, now);
+            synth.volume.rampTo(volumeActual, 0.1);
+        }
+        soundEnabled = true;
+    }
+
     function movementToSoundPage() {
         if ($("#slider-music-MTM").prop("checked")) {
-            if (!accessRequestFault && typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function") {
-                DeviceMotionEvent.requestPermission().then( response => {
-                    // (optional) Do something after API prompt dismissed.
-                    if ( response !== "granted" ) {
-                        alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
-                        alert("This application requires data from the accelerometer to function correctly.");
-                        accessRequestFault = true;
-                    }
-                })
-            }
+            requestMotionPermission();
 
-            window.addEventListener("devicemotion", motionHandler);
-
-            updatePitchActual(p_x * 10);
-            updateVolumeActual(p_y * 10);
-
-            updateMovementToSoundFields();
-
-            if (volumeActual > 0)
-                soundRunning = true
-            if (soundRunning) {
-                synth.triggerAttack(pitchActual, now);
-                synth.volume.rampTo(volumeActual, 0.1);
-            }
-            soundEnabled = true;
+            window.addEventListener("devicemotion", motionToSoundHandler);
         } else {
-            window.removeEventListener("devicemotion", motionHandler);
+            window.removeEventListener("devicemotion", motionToSoundHandler);
             synth.triggerRelease(now);
             soundEnabled = false;
             soundRunning = false;
@@ -552,6 +609,11 @@
     });
 
     /* Slider run function */
+
+    function updateSlidersFields() {
+        $("#volume-range").val(volumeRange);
+        $("#pitch-range").val(pitchRange);
+    }
 
     function sliderPage() {
         if ($("#slider-music").prop("checked")) {
