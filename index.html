@@ -5,10 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-
+    <!-- JS libraries -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
             integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -548,69 +549,13 @@
 
 </body>
 </html>
+<script src="js/base.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/motionToData.js"></script>
+<script src="js/motionToSound.js"></script>
+<script src="js/sliderToSound.js"></script>
 <script>
-    const chartSize = 200;
-    var chartLabels = new Array(chartSize);
-    for (var i = 0; i < chartLabels.length; i++) {
-        chartLabels[i] = i + 1;
-    }
-
-    var chartField = $("#movementDataChart")[0].getContext("2d");
-    var chart = new Chart(chartField, {
-        // The type of chart we want to create
-        type: "line",
-
-        // The data for our dataset
-        data: {
-            labels: chartLabels,
-            datasets: [
-                {
-                    label: "Acceleration X",
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: []
-                },
-                {
-                    label: "Acceleration Y",
-                    borderColor: 'rgb(50, 168, 82)',
-                    data: []
-                }
-            ]
-        },
-
-        // Configuration options go here
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        suggestedMin: -1,
-                        suggestedMax: 1
-                    }
-                }],
-                xAxes: [{
-                    display: false
-                }]
-            }
-        }
-    });
-
-    const synth = new Tone.Synth().toDestination();
-    const now = Tone.now()
-
-    const volumeMax = 10;
-    const volumeMin = 0;
-    var volumeRange = 100;
-    var volumeActual = 10;
-
-    var pitchMax = 500;
-    var pitchMin = 80;
-    var pitchRange = 0;
-    var pitchActual = 0;
-
-    var soundEnabled = false;
-    var soundRunning = false;
-
-    /* Setup page data */
-
     $(document).ready(function () {
         $("#on-startup-modal").modal();
 
@@ -626,6 +571,11 @@
         $("#px-MTM").val(p_x);
         $("#py-MTM").val(p_y);
         $("#d-MTM").val(datapoints);
+    }
+
+    function updateSlidersFields() {
+        $("#volume-range").val(volumeRange);
+        $("#pitch-range").val(pitchRange);
     }
 
     function reset() {
@@ -681,281 +631,21 @@
         reset();
     })
 
-    /* Sound running functions */
-
-    function updateVolumeActual(volumeRange, volumeRangeSize = 100) {
-        volumeActual = Math.round(volumeMin + ((volumeMax - volumeMin) * (volumeRange / volumeRangeSize)));
-        $(".volume-data").val(volumeActual);
-
-        if (soundEnabled) {
-            if (volumeActual === 0) {
-                if (soundRunning) {
-                    synth.triggerRelease(now);
-                    soundRunning = false;
-                }
-            } else {
-                if (soundRunning)
-                    synth.volume.rampTo(volumeActual, 0.1);
-                else {
-                    synth.triggerAttack(pitchActual, now);
-                    soundRunning = true;
-                }
-            }
-        }
-    }
-
-    function updatePitchActual(pitchRange, pitchRangeSize = 100) {
-        pitchActual = Math.round(pitchMin + ((pitchMax - pitchMin) * (pitchRange / pitchRangeSize)));
-        $(".pitch-data").val(pitchActual + " Hz");
-
-        if (soundEnabled) {
-            synth.frequency.rampTo(pitchActual, 0.1);
-        }
-    }
-
-    /* Motion setup */
-    var a_x;
-    var a_y;
-    var a_i;
-    var datapoints = 0;
-
-    var v_x = 0;
-    var p_x = 0;
-
-    var v_y = 0;
-    var p_y = 0;
-
-    function motionHandler(event) {
-        a_x = event.acceleration.x;
-        a_y = event.acceleration.y;
-        a_i = event.interval;
-
-        v_x = v_x + a_x * a_i;
-        v_y = v_y + a_y * a_i;
-        p_x = p_x + v_x * a_i;
-        p_y = p_y + v_y * a_i;
-
-        if (p_x < 0)
-            p_x = 0;
-        else if (p_x > 10)
-            p_x = 10;
-
-        if (p_y < 0)
-            p_y = 0;
-        else if (p_y > 10)
-            p_y = 10;
-
-        datapoints += 1;
-    }
-
-    accessRequestFault = false;
-
-    function requestMotionPermission() {
-        if (!accessRequestFault && typeof (DeviceMotionEvent) !== "undefined" && typeof (DeviceMotionEvent.requestPermission) === "function") {
-            DeviceMotionEvent.requestPermission().then(response => {
-                // (optional) Do something after API prompt dismissed.
-                if (response !== "granted") {
-                    alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
-                    alert("This application requires data from the accelerometer to function correctly.");
-                    accessRequestFault = true;
-                }
-            })
-        }
-    }
-
-    /* MOTION TO DATA */
-
-    mapAccel = true;
-    mapSpeed = false;
-    mapPos = false;
-
-    function resetChart() {
-        chart.data.datasets[0].data = [];
-        chart.data.datasets[1].data = [];
-
-        chart.update();
-    }
-
-    function setChartSize(size = 50) {
-        chart.options.scales.yAxes[0].ticks.suggestedMax = size;
-        chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
-    }
-
-    function motionToDataHandler(event) {
-        motionHandler(event);
-
-        if (chart.data.datasets[0].data.length > chartSize || chart.data.datasets[1].data.length > chartSize)
-            resetChart();
-
-        if (mapAccel) {
-            chart.data.datasets[0].data.push(a_x);
-            chart.data.datasets[1].data.push(a_y);
-        } else if (mapSpeed) {
-            chart.data.datasets[0].data.push(v_x);
-            chart.data.datasets[1].data.push(v_y);
-        } else if (mapPos) {
-            chart.data.datasets[0].data.push(p_x);
-            chart.data.datasets[1].data.push(p_y);
-        }
-
-        chart.update();
-    }
-
-    function movementToDataPage() {
-        if ($("#slider-data-MTD").prop("checked")) {
-            requestMotionPermission();
-
-            window.addEventListener("devicemotion", motionToDataHandler);
-        } else {
-            window.removeEventListener("devicemotion", motionToDataHandler);
-        }
-    }
-
-    $("#slider-data-MTD").click(function (e) {
-        movementToDataPage();
-    })
-
-    $("#accel-btn").click(function (e) {
-        e.preventDefault();
-        $(this).removeClass("btn-outline-danger").addClass("btn-danger");
-        $("#speed-btn").removeClass("btn-warning").addClass("btn-outline-warning");
-        $("#pos-btn").removeClass("btn-success").addClass("btn-outline-success");
-
-        chart.data.datasets[0].label = "Acceleration X";
-        chart.data.datasets[1].label = "Acceleration Y";
-
-        mapAccel = true;
-        mapSpeed = false;
-        mapPos = false;
-
-        setChartSize(1);
-        resetChart();
-    })
-
-    $("#speed-btn").click(function (e) {
-        e.preventDefault();
-        $(this).removeClass("btn-outline-warning").addClass("btn-warning");
-        $("#accel-btn").removeClass("btn-danger").addClass("btn-outline-danger");
-        $("#pos-btn").removeClass("btn-success").addClass("btn-outline-success");
-
-        chart.data.datasets[0].label = "Speed X";
-        chart.data.datasets[1].label = "Speed Y";
-
-        mapAccel = false;
-        mapSpeed = true;
-        mapPos = false;
-
-        setChartSize(5);
-        resetChart();
-    })
-
-    $("#pos-btn").click(function (e) {
-        e.preventDefault();
-        $(this).removeClass("btn-outline-success").addClass("btn-success");
-        $("#accel-btn").removeClass("btn-danger").addClass("btn-outline-danger");
-        $("#speed-btn").removeClass("btn-warning").addClass("btn-outline-warning");
-
-        chart.data.datasets[0].label = "Position X";
-        chart.data.datasets[1].label = "Position Y";
-
-        mapAccel = false;
-        mapSpeed = false;
-        mapPos = true;
-
-        setChartSize(10);
-        resetChart();
-    })
-
-    /* MOTION TO SOUND */
-
-    function motionToSoundHandler(event) {
-        motionHandler(event);
-
-        updatePitchActual(p_x * 10);
-        updateVolumeActual(p_y * 10);
-
-        updateMovementToSoundFields();
-    }
-
-    function movementToSoundPage() {
-        if ($("#slider-music-MTM").prop("checked")) {
-            requestMotionPermission();
-
-            if (volumeActual > 0)
-                soundRunning = true
-            if (soundRunning) {
-                synth.triggerAttack(pitchActual, now);
-                synth.volume.rampTo(volumeActual, 0.1);
-            }
-            soundEnabled = true;
-
-            window.addEventListener("devicemotion", motionToSoundHandler);
-        } else {
-            window.removeEventListener("devicemotion", motionToSoundHandler);
-            synth.triggerRelease(now);
-            soundEnabled = false;
-            soundRunning = false;
-        }
-    }
-
-    $("#slider-music-MTM").click(function (e) {
-        movementToSoundPage();
-    })
-
-    /* SLIDER */
-
-    /* Data fetching from the slider section */
-
-    $(document).on("input", "#volume-range", function () {
-        volumeRange = $(this).val();
-        updateVolumeActual(volumeRange, 100);
-    });
-
-    $(document).on("input", "#pitch-range", function () {
-        pitchRange = $(this).val();
-        updatePitchActual(pitchRange, 100);
-    });
-
-    $(document).on("input", ".pitch-min", function () {
-        pitchMin = parseInt($(this).val());
-        updatePitchActual(pitchRange, 100);
-    });
-
-    $(document).on("input", ".pitch-max", function () {
-        pitchMax = parseInt($(this).val());
-        updatePitchActual(pitchRange, 100);
-    });
-
-    /* Slider run function */
-
-    function updateSlidersFields() {
-        $("#volume-range").val(volumeRange);
-        $("#pitch-range").val(pitchRange);
-    }
-
-    function sliderPage() {
-        if ($("#slider-music").prop("checked")) {
-            if (volumeActual > 0)
-                soundRunning = true
-            if (soundRunning) {
-                synth.triggerAttack(pitchActual, now);
-                synth.volume.rampTo(volumeActual, 0.1);
-            }
-            soundEnabled = true;
-        } else {
-            synth.triggerRelease(now);
-            soundEnabled = false;
-            soundRunning = false;
-        }
-    }
-
-    /* Start slider page */
+    /* Start app */
 
     $("#start-app").click(function (e) {
         Tone.start();
 
         $("#slider-music").click(function (e) {
             sliderPage();
+        })
+
+        $("#slider-data-MTD").click(function (e) {
+            movementToDataPage();
+        })
+
+        $("#slider-music-MTM").click(function (e) {
+            movementToSoundPage();
         })
     })
 </script>
