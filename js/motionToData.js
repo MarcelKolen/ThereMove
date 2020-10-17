@@ -2,11 +2,6 @@ var mapAccel = true;
 var mapSpeed = false;
 var mapPos = false;
 
-function setChartSize(size = 50) {
-    chart.options.scales.yAxes[0].ticks.suggestedMax = size;
-    chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
-}
-
 function motionToDataHandler(event) {
     motionHandler(event);
 

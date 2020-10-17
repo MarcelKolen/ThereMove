@@ -16,6 +16,9 @@ var deadzone = 0.1;
 
 $(document).on("input", "#max-speed", function () {
     maxSpeed = parseInt($(this).val());
+    if (isNaN(maxSpeed))
+        maxSpeed = 10;
+    setChartSize(maxSpeed);
 });
 
 $(document).on("input", "#acceleration-amplifier", function () {

@@ -48,3 +48,10 @@ function resetChart() {
 
     chart.update();
 }
+
+function setChartSize(size = 50) {
+    chart.options.scales.yAxes[0].ticks.suggestedMax = size;
+    chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
+
+    chart.update();
+}
