@@ -8,16 +8,6 @@ $(document).on("input", "#pitch-range", function () {
     updatePitchActual(pitchRange, 100);
 });
 
-$(document).on("input", ".pitch-min", function () {
-    pitchMin = parseInt($(this).val());
-    updatePitchActual(pitchRange, 100);
-});
-
-$(document).on("input", ".pitch-max", function () {
-    pitchMax = parseInt($(this).val());
-    updatePitchActual(pitchRange, 100);
-});
-
 /* Slider run function */
 
 function sliderPage() {

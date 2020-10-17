@@ -19,7 +19,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.61/Tone.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
     <title>ThereMove</title>
+
 </head>
 <body>
 <!-- page navigation header -->
@@ -48,13 +50,15 @@
             <div class="col-md-12" style="height: 100%;">
                 <div class="tab-content" id="nav-tabContent" style="height: 100%;">
 
-                    <div class="tab-pane fade show active" id="nav-STM" role="tabpanel" aria-labelledby="nav-STM-tab" style="height: 100%;">
+                    <div class="tab-pane fade show active" id="nav-STM" role="tabpanel" aria-labelledby="nav-STM-tab"
+                         style="height: 100%;">
                         <div class="jumbotron" style="height: 100%;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <a href="" data-toggle="modal" data-target="#slider-help"><code>Help me!</code></a>
                                 </div>
                             </div>
+                            <hr class="my-4">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -129,13 +133,19 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="nav-MTM" role="tabpanel" aria-labelledby="nav-MTM-tab" style="height: 100%;">
+                    <div class="tab-pane fade" id="nav-MTM" role="tabpanel" aria-labelledby="nav-MTM-tab"
+                         style="height: 100%;">
                         <div class="jumbotron" style="height: 100%;">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <a href="" data-toggle="modal" data-target="#movement-help"><code>Help me!</code></a>
+                                <div class="col-6">
+                                    <a href="" data-toggle="modal" data-target="#movement-help"><code>Help
+                                        me!</code></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="" data-toggle="modal" data-target="#motion-settings-modal"><code>Motion settings</code></a>
                                 </div>
                             </div>
+                            <hr class="my-4">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -257,13 +267,19 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab" style="height: 100%">
+                    <div class="tab-pane fade" id="nav-MTD" role="tabpanel" aria-labelledby="nav-MTD-tab"
+                         style="height: 100%">
                         <div class="jumbotron" style="height: 100%">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <a href="" data-toggle="modal" data-target="#data-help"><code>Help me!</code></a>
+                                <div class="col-6">
+                                    <a href="" data-toggle="modal" data-target="#movement-help"><code>Help
+                                        me!</code></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="" data-toggle="modal" data-target="#motion-settings-modal"><code>Motion settings</code></a>
                                 </div>
                             </div>
+                            <hr class="my-4">
                             <div class="row" style="height: 100%;">
                                 <div class="col-12" style="height: 100%;">
                                     <canvas id="movementDataChart" style="width: 100%; height: auto;">
@@ -273,13 +289,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 text-center">
-                                    <button type="button" class="btn btn-danger btn-sm" style="width: 50%; align-content: center;" id="accel-btn">Acceleration</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            style="width: 50%; align-content: center;" id="accel-btn">Acceleration
+                                    </button>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <button type="button" class="btn btn-outline-warning btn-sm" style="width: 50%; align-content: center;" id="speed-btn">Speed</button>
+                                    <button type="button" class="btn btn-outline-warning btn-sm"
+                                            style="width: 50%; align-content: center;" id="speed-btn">Speed
+                                    </button>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <button type="button" class="btn btn-outline-success btn-sm" style="width: 50%; align-content: center;" id="pos-btn">Position</button>
+                                    <button type="button" class="btn btn-outline-success btn-sm"
+                                            style="width: 50%; align-content: center;" id="pos-btn">Position
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
@@ -311,7 +333,7 @@
                 <div class="modal-body">
                     <p>In this demo we will show three components of our research into the simulation of a theremin
                         device:</p>
-                    <p>
+
                     <ul>
                         <li>
                             Mapping raw numerical data to a synthesiser.
@@ -325,7 +347,7 @@
                             plotting.
                         </li>
                     </ul>
-                    </p>
+
                     <p>Please refer to the <code>top menu bar</code> to switch between the different modes. Please also
                         note that every page has a <code>help me</code> button for a small guide into the app.</p>
                 </div>
@@ -333,6 +355,55 @@
                     <button type="button" class="btn btn-success btn-sm" id="start-app" data-dismiss="modal">Click on me
                         to start the app
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- control modal -->
+    <div class="modal" id="motion-settings-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Motion settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><b>Acceleration amplifier</b> puts an amplifier on the acceleration data making it more sensitive to movement.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="acceleration-amplifier">Acceleration amplifier</label>
+                                        <input type="number" class="form-control pitch-data" id="acceleration-amplifier"
+                                               value="1" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><b>Maximum motion speed</b> determines the maximum motion speed (caps if higher or lower).</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="max-speed">Maximum motion speed</label>
+                                        <input type="number" class="form-control pitch-data" id="max-speed"
+                                               value="1" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -350,26 +421,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>On the slider page there are several input field and a few read only fields. Here we will quickly explain what each field does:</p>
+                    <p>On the slider page there are several input field and a few read only fields. Here we will quickly
+                        explain what each field does:</p>
                     <ul>
                         <li>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>These sliders help you with dialing in a gradual change in either <b>volume</b> or <b>pitch</b>. For volume, the <i>minimum</i> is <b>1</b> and the <i>maximum</i> is <b>10</b>.</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="range-example">Volume or Pitch</label>
-                                    <input type="range" class="form-control-range" id="range-example"
-                                           value="0">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>These sliders help you with dialing in a gradual change in either <b>volume</b>
+                                        or <b>pitch</b>. For volume, the <i>minimum</i> is <b>1</b> and the
+                                        <i>maximum</i> is <b>10</b>.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="range-example">Volume or Pitch</label>
+                                        <input type="range" class="form-control-range" id="range-example"
+                                               value="0">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>The <b>pitch</b> <i>minimum</i> and <i>maximum</i> allow you to dial in a minimum and maximum pitch height. The lowest you can go is <b>0</b> and the highest is for you to decide (well.. up to a certain point of course because human hearing is limited). You can then use the slider to get a point between these two values!</p>
+                                    <p>The <b>pitch</b> <i>minimum</i> and <i>maximum</i> allow you to dial in a minimum
+                                        and maximum pitch height. The lowest you can go is <b>0</b> and the highest is
+                                        for you to decide (well.. up to a certain point of course because human hearing
+                                        is limited). You can then use the slider to get a point between these two
+                                        values!</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -383,7 +461,10 @@
                         <li>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>The readonly fields tell you the actual value of either <b>volume</b> or <b>pitch</b> which is being send to the sound synthesizer. The value in this field is entirely dependant on your input! Play around with the input field to see these values change.</p>
+                                    <p>The readonly fields tell you the actual value of either <b>volume</b> or
+                                        <b>pitch</b> which is being send to the sound synthesizer. The value in this
+                                        field is entirely dependant on your input! Play around with the input field to
+                                        see these values change.</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -429,24 +510,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>On the movement to sound page there are several input field, a few read only fields and some other special characteristics. Here we will quickly explain what each component does:</p>
+                    <p>On the movement to sound page there are several input field, a few read only fields and some
+                        other special characteristics. Here we will quickly explain what each component does:</p>
                     <ul>
                         <li>
                             <div class="row">
                                 <div class="col-12">
-                                    <p>In order to change the volume and pitch, it is required that you move your device about from side to side and up and down! Horizontal motion translates to a change in pitch and vertical motion changes the volume for you. The sound is not dependant on shaking for example, but more on linear motions.</p>
+                                    <p>In order to change the volume and pitch, it is required that you move your device
+                                        about from side to side and up and down! Horizontal motion translates to a
+                                        change in pitch and vertical motion changes the volume for you. The sound is not
+                                        dependant on shaking for example, but more on linear motions.</p>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>The <b>pitch</b> <i>minimum</i> and <i>maximum</i> allow you to dial in a minimum and maximum pitch height. The lowest you can go is <b>0</b> and the highest is for you to decide (well.. up to a certain point of course because human hearing is limited). You can then use motion to get a point between these two values!</p>
+                                    <p>The <b>pitch</b> <i>minimum</i> and <i>maximum</i> allow you to dial in a minimum
+                                        and maximum pitch height. The lowest you can go is <b>0</b> and the highest is
+                                        for you to decide (well.. up to a certain point of course because human hearing
+                                        is limited). You can then use motion to get a point between these two values!
+                                    </p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="pitch-minmax-example-move">Pitch min/max example</label>
-                                        <input type="number" class="form-control pitch-data" id="pitch-minmax-example-move"
+                                        <input type="number" class="form-control pitch-data"
+                                               id="pitch-minmax-example-move"
                                                value="240">
                                     </div>
                                 </div>
@@ -455,7 +545,10 @@
                         <li>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>The readonly fields tell you the actual value of <b>volume</b> or <b>pitch</b> for example, but also the values caught by the accelerometer. The value in this field is entirely dependant on your input! Play around with the input field to see these values change.</p>
+                                    <p>The readonly fields tell you the actual value of <b>volume</b> or <b>pitch</b>
+                                        for example, but also the values caught by the accelerometer. The value in this
+                                        field is entirely dependant on your input! Play around with the input field to
+                                        see these values change.</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -476,7 +569,8 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input"
                                                id="slider-example-sliders-move">
-                                        <label class="custom-control-label" for="slider-example-sliders-move">on/off</label>
+                                        <label class="custom-control-label"
+                                               for="slider-example-sliders-move">on/off</label>
                                     </div>
                                 </div>
                             </div>
@@ -501,19 +595,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>On the movement to data page you can see the raw output of the sensors and the corresponding calculated data. Here we will quickly explain what each component does:</p>
+                    <p>On the movement to data page you can see the raw output of the sensors and the corresponding
+                        calculated data. Here we will quickly explain what each component does:</p>
                     <ul>
                         <li>
                             <div class="row">
                                 <div class="col-12">
-                                    <p>When you turn on the motion capturing feature with the slider, to app will start to record every little movement of the device. All the movement will be translated to data and it will be plotted for you to see.</p>
+                                    <p>When you turn on the motion capturing feature with the slider, to app will start
+                                        to record every little movement of the device. All the movement will be
+                                        translated to data and it will be plotted for you to see.</p>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>You can use one of the three buttons below the chart to display different characteristics. You can choose between <b>acceleration</b>, <b>speed</b> and <b>position</b>.</p>
+                                    <p>You can use one of the three buttons below the chart to display different
+                                        characteristics. You can choose between <b>acceleration</b>, <b>speed</b> and
+                                        <b>position</b>.</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="col-md-4 text-center">
@@ -531,7 +630,8 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input"
                                                id="slider-example-sliders-data">
-                                        <label class="custom-control-label" for="slider-example-sliders-data">on/off</label>
+                                        <label class="custom-control-label"
+                                               for="slider-example-sliders-data">on/off</label>
                                     </div>
                                 </div>
                             </div>
@@ -605,6 +705,7 @@
         a_x = 0;
         a_y = 0;
         a_i = 0;
+        amplifier = 1;
 
         // Reset DOM fields
         updateSlidersFields();
@@ -613,6 +714,8 @@
         $(".pitch-min").val(pitchMin);
         $(".pitch-max").val(pitchMax);
         $(".pitch-data").val(pitchActual + " Hz");
+        $("#acceleration-amplifier").val(amplifier);
+        $("#max-speed").val(maxSpeed);
 
         sliderPage();
         movementToSoundPage();

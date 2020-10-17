@@ -14,6 +14,16 @@ var pitchActual = 0;
 var soundEnabled = false;
 var soundRunning = false;
 
+$(document).on("input", ".pitch-min", function () {
+    pitchMin = parseInt($(this).val());
+    updatePitchActual(pitchRange, 100);
+});
+
+$(document).on("input", ".pitch-max", function () {
+    pitchMax = parseInt($(this).val());
+    updatePitchActual(pitchRange, 100);
+});
+
 /* Sound running functions */
 
 function updateVolumeActual(volumeRange, volumeRangeSize = 100) {
