@@ -22,6 +22,10 @@ $(document).on("input", "#acceleration-amplifier", function () {
     amplifier = parseInt($(this).val());
 });
 
+$(document).on("input", "#deadzone", function () {
+    deadzone = parseInt($(this).val());
+});
+
 function speedCap(speedcap = 10) {
     if (v_x < -speedcap)
         v_x = 0;
