@@ -9,7 +9,7 @@ var volumeActual = 10;
 var pitchMax = 500;
 var pitchMin = 80;
 var pitchRange = 0;
-var pitchActual = 0;
+var pitchActual = 80;
 
 var soundEnabled = false;
 var soundRunning = false;

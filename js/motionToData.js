@@ -67,7 +67,7 @@ $("#speed-btn").click(function (e) {
     mapSpeed = true;
     mapPos = false;
 
-    setChartSize(5);
+    setChartSize(maxSpeed);
     resetChart();
 })
 

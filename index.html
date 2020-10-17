@@ -66,7 +66,6 @@
                                             <div class="form-group">
                                                 <label for="pitch-min">Pitch-minimum</label>
                                                 <input type="number" class="form-control pitch-min" id="pitch-min"
-                                                       value="0"
                                                        min="0">
                                             </div>
                                         </div>
@@ -74,7 +73,6 @@
                                             <div class="form-group">
                                                 <label for="pitch-max">Pitch-maximum</label>
                                                 <input type="number" class="form-control pitch-max" id="pitch-max"
-                                                       value="100"
                                                        min="0">
                                             </div>
                                         </div>
@@ -400,6 +398,20 @@
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><b>Deadzone</b> determines how much movement is required before the sensors pick up the movement.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="deadzone">Maximum motion speed</label>
+                                        <input type="number" class="form-control pitch-data" id="deadzone"
+                                               value="1" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -693,8 +705,9 @@
         volumeActual = 10;
         pitchRange = 0;
         pitchMax = 500;
-        pitchMin = 0;
-        pitchActual = 0;
+        pitchMin = 80;
+        pitchActual = 80;
+        deadzone = 0.1;
 
         // Reset movement variables
         datapoints = 0;
@@ -706,6 +719,7 @@
         a_y = 0;
         a_i = 0;
         amplifier = 1;
+        maxSpeed = 10;
 
         // Reset DOM fields
         updateSlidersFields();
@@ -716,6 +730,7 @@
         $(".pitch-data").val(pitchActual + " Hz");
         $("#acceleration-amplifier").val(amplifier);
         $("#max-speed").val(maxSpeed);
+        $("#deadzone").val(deadzone);
 
         sliderPage();
         movementToSoundPage();

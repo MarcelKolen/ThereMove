@@ -12,6 +12,7 @@ var p_y = 0;
 
 var amplifier = 1;
 var maxSpeed = 10;
+var deadzone = 0.1;
 
 $(document).on("input", "#max-speed", function () {
     maxSpeed = parseInt($(this).val());
@@ -45,24 +46,32 @@ function posCap(poscap = 10) {
         p_y = 10;
 }
 
-function standardMapping(amplifier = 1, speedcap = 10, poscap = 10) {
-    v_x = v_x + a_x * amplifier * a_i;
-    v_y = v_y + a_y * amplifier * a_i;
+function standardMapping() {
+    v_x = v_x + a_x * a_i;
+    v_y = v_y + a_y * a_i;
 
     speedCap(maxSpeed);
 
     p_x = p_x + v_x * a_i;
     p_y = p_y + v_y * a_i;
 
-    posCap(poscap);
+    posCap(10);
 }
 
 function motionHandler(event) {
     a_x = event.acceleration.x;
     a_y = event.acceleration.y;
+
+    if (Math.abs(a_x) < deadzone)
+        a_x = 0;
+    if (Math.abs(a_y) < deadzone)
+        a_y = 0;
+
+    a_x *= amplifier;
+    a_y *= amplifier;
     a_i = event.interval;
 
-    standardMapping(amplifier);
+    standardMapping();
 
     datapoints += 1;
 }
