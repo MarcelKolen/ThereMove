@@ -8,11 +8,13 @@ var v_x = 0;
 var p_x = 0;
 
 var v_y = 0;
-var p_y = 0;
+var p_y = 5;
 
 var amplifier = 1;
 var maxSpeed = 10;
 var deadzone = 0.1;
+var forceSpeedToZero = false;
+var forceSpeedToZeroFactor = 0.1;
 
 $(document).on("input", "#max-speed", function () {
     maxSpeed = parseInt($(this).val());
@@ -26,31 +28,43 @@ $(document).on("input", "#acceleration-amplifier", function () {
 });
 
 $(document).on("input", "#deadzone", function () {
-    deadzone = parseInt($(this).val());
+    deadzone = parseFloat($(this).val());
 });
+
+$(document).on("input", "#force-Speed-To-Zero-Factor", function () {
+    deadzone = parseFloat($(this).val());
+});
+
+$("#slider-force-Speed-To-Zero").click(function (e) {
+    if ($(this).prop("checked")) {
+        forceSpeedToZero = true;
+    } else {
+        forceSpeedToZero = false;
+    }
+})
 
 function speedCap(speedcap = 10) {
     if (v_x < -speedcap)
-        v_x = 0;
+        v_x = -speedcap;
     else if (v_x > speedcap)
-        v_x = 10;
+        v_x = speedcap;
 
     if (v_y < -speedcap)
-        v_y = 0;
+        v_y = -speedcap;
     else if (v_y > speedcap)
-        v_y = 10;
+        v_y = speedcap;
 }
 
 function posCap(poscap = 10) {
     if (p_x < 0)
         p_x = 0;
     else if (p_x > poscap)
-        p_x = 10;
+        p_x = poscap;
 
     if (p_y < 0)
         p_y = 0;
     else if (p_y > poscap)
-        p_y = 10;
+        p_y = poscap;
 }
 
 function standardMapping() {
@@ -58,6 +72,20 @@ function standardMapping() {
     v_y = v_y + a_y * a_i;
 
     speedCap(maxSpeed);
+
+    if (forceSpeedToZero) {
+        if (v_x > 0) {
+            v_x -= forceSpeedToZeroFactor;
+        } else if (v_x < 0) {
+            v_x += forceSpeedToZeroFactor;
+        }
+
+        if (v_y > 0) {
+            v_y -= forceSpeedToZeroFactor;
+        } else if (v_y < 0) {
+            v_y += forceSpeedToZeroFactor;
+        }
+    }
 
     p_x = p_x + v_x * a_i;
     p_y = p_y + v_y * a_i;
@@ -69,10 +97,12 @@ function motionHandler(event) {
     a_x = event.acceleration.x;
     a_y = event.acceleration.y;
 
-    if (Math.abs(a_x) < deadzone)
-        a_x = 0;
-    if (Math.abs(a_y) < deadzone)
-        a_y = 0;
+    if (deadzone !== 0) {
+        if (Math.abs(a_x) < deadzone)
+            a_x = 0;
+        if (Math.abs(a_y) < deadzone)
+            a_y = 0;
+    }
 
     a_x *= amplifier;
     a_y *= amplifier;

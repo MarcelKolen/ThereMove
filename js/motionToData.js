@@ -79,6 +79,6 @@ $("#pos-btn").click(function (e) {
     mapSpeed = false;
     mapPos = true;
 
-    setChartSize(10);
+    setChartSize(10, true);
     resetChart();
 })

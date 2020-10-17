@@ -49,9 +49,12 @@ function resetChart() {
     chart.update();
 }
 
-function setChartSize(size = 50) {
+function setChartSize(size = 50, absolute = false) {
     chart.options.scales.yAxes[0].ticks.suggestedMax = size;
-    chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
+    if (absolute)
+        chart.options.scales.yAxes[0].ticks.suggestedMin = 0;
+    else
+        chart.options.scales.yAxes[0].ticks.suggestedMin = -size;
 
     chart.update();
 }

@@ -379,7 +379,7 @@
                                     <div class="form-group">
                                         <label for="acceleration-amplifier">Acceleration amplifier</label>
                                         <input type="number" class="form-control" id="acceleration-amplifier"
-                                               value="1" min="1">
+                                               min="1">
                                     </div>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@
                                     <div class="form-group">
                                         <label for="max-speed">Maximum motion speed</label>
                                         <input type="number" class="form-control" id="max-speed"
-                                               value="1" min="1">
+                                               min="1">
                                     </div>
                                 </div>
                             </div>
@@ -407,7 +407,38 @@
                                     <div class="form-group">
                                         <label for="deadzone">Maximum motion speed</label>
                                         <input type="number" class="form-control" id="deadzone"
-                                               value="1" min="1">
+                                               min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr class="my-4">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><b>Force neutral factor</b> determines how quickly the speed will return to <code>0</code>.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="force-Speed-To-Zero-Factor">Acceleration amplifier</label>
+                                        <input type="number" class="form-control" id="force-Speed-To-Zero-Factor"
+                                               min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><b>Force neutral</b> will force the motion speed down (or up) to <code>0</code> to prevent position wandering.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input"
+                                               id="slider-force-Speed-To-Zero">
+                                        <label class="custom-control-label" for="slider-force-Speed-To-Zero">on/off</label>
                                     </div>
                                 </div>
                             </div>
@@ -695,6 +726,7 @@
         $("#slider-data-MTD").prop('checked', false);
         $("#slider-music-MTM").prop('checked', false);
         $("#slider-music").prop('checked', false);
+        $("#slider-force-Speed-To-Zero").prop('checked', false);
 
         // Reset sound control
         soundEnabled = false;
@@ -712,7 +744,7 @@
         // Reset movement variables
         datapoints = 0;
         p_x = 0;
-        p_y = 0;
+        p_y = 5;
         v_x = 0;
         v_y = 0;
         a_x = 0;
@@ -720,6 +752,8 @@
         a_i = 0;
         amplifier = 1;
         maxSpeed = 10;
+        forceSpeedToZero = false;
+        forceSpeedToZeroFactor = 0.1;
 
         // Reset DOM fields
         updateSlidersFields();
@@ -731,6 +765,7 @@
         $("#acceleration-amplifier").val(amplifier);
         $("#max-speed").val(maxSpeed);
         $("#deadzone").val(deadzone);
+        $("#force-Speed-To-Zero-Factor").val(forceSpeedToZeroFactor);
 
         sliderPage();
         movementToSoundPage();
