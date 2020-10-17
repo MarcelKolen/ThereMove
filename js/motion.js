@@ -21,7 +21,7 @@ $(document).on("input", "#acceleration-amplifier", function () {
     amplifier = parseInt($(this).val());
 });
 
-function speedCap(seepcap = 10) {
+function speedCap(speedcap = 10) {
     if (v_x < -speedcap)
         v_x = 0;
     else if (v_x > speedcap)
