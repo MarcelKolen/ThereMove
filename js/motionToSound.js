@@ -19,7 +19,9 @@ function movementToSoundPage() {
         }
         soundEnabled = true;
 
-        window.addEventListener("devicemotion", motionToSoundHandler);
+        res = window.addEventListener("devicemotion", motionToSoundHandler);
+
+        alert(res);
     } else {
         window.removeEventListener("devicemotion", motionToSoundHandler);
         synth.triggerRelease(now);
