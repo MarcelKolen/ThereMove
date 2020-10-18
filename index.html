@@ -348,6 +348,8 @@
 
                     <p>Please refer to the <code>top menu bar</code> to switch between the different modes. Please also
                         note that every page has a <code>help me</code> button for a small guide into the app.</p>
+                    <hr class="my-4">
+                    <p><small><code>Version 34</code></small></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success btn-sm" id="start-app" data-dismiss="modal">Click on me
@@ -739,7 +741,6 @@
         pitchMax = 500;
         pitchMin = 80;
         pitchActual = 80;
-        deadzone = 0.1;
 
         // Reset movement variables
         datapoints = 0;
@@ -750,9 +751,10 @@
         a_x = 0;
         a_y = 0;
         a_i = 0;
-        amplifier = 1;
-        maxSpeed = 10;
-        forceSpeedToZero = false;
+        amplifier = 0.2;
+        maxSpeed = 3;
+        deadzone = 0.1;
+        forceSpeedToZero = true;
         forceSpeedToZeroFactor = 0.1;
 
         // Reset DOM fields

@@ -10,11 +10,11 @@ var p_x = 0;
 var v_y = 0;
 var p_y = 5;
 
-var amplifier = 1;
-var maxSpeed = 10;
-var deadzone = 0.1;
-var forceSpeedToZero = false;
-var forceSpeedToZeroFactor = 0.1;
+var amplifier;
+var maxSpeed;
+var deadzone;
+var forceSpeedToZero;
+var forceSpeedToZeroFactor;
 
 $(document).on("input", "#max-speed", function () {
     maxSpeed = parseInt($(this).val());
