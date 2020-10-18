@@ -32,14 +32,16 @@ $(document).on("input", "#deadzone", function () {
 });
 
 $(document).on("input", "#force-Speed-To-Zero-Factor", function () {
-    deadzone = parseFloat($(this).val());
+    forceSpeedToZeroFactor = parseFloat($(this).val());
 });
 
 $("#slider-force-Speed-To-Zero").click(function (e) {
     if ($(this).prop("checked")) {
         forceSpeedToZero = true;
+        alert("Gaat naar kut 0");
     } else {
         forceSpeedToZero = false;
+        alert("Gaat niet naar kut 0");
     }
 })
 
@@ -75,15 +77,15 @@ function standardMapping() {
 
     if (forceSpeedToZero) {
         if (v_x > 0) {
-            v_x -= forceSpeedToZeroFactor;
+            v_x = v_x - forceSpeedToZeroFactor;
         } else if (v_x < 0) {
-            v_x += forceSpeedToZeroFactor;
+            v_x = v_x + forceSpeedToZeroFactor;
         }
 
         if (v_y > 0) {
-            v_y -= forceSpeedToZeroFactor;
+            v_y = v_y - forceSpeedToZeroFactor;
         } else if (v_y < 0) {
-            v_y += forceSpeedToZeroFactor;
+            v_y = v_y + forceSpeedToZeroFactor;
         }
     }
 
@@ -104,8 +106,8 @@ function motionHandler(event) {
             a_y = 0;
     }
 
-    a_x *= amplifier;
-    a_y *= amplifier;
+    a_x = a_x * amplifier;
+    a_y = a_y * amplifier;
     a_i = event.interval;
 
     standardMapping();
@@ -126,4 +128,6 @@ function requestMotionPermission() {
             }
         })
     }
+
+    alert("tering kut app");
 }

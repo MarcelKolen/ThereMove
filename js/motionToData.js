@@ -27,6 +27,7 @@ function movementToDataPage() {
         requestMotionPermission();
 
         window.addEventListener("devicemotion", motionToDataHandler);
+        alert("krijg tering");
     } else {
         window.removeEventListener("devicemotion", motionToDataHandler);
     }
