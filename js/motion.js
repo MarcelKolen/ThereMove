@@ -127,11 +127,7 @@ function requestMotionPermission() {
                 alert("Warning: Your device has either blocked access to your movement devices or does not have them.");
                 alert("This application requires data from the accelerometer to function correctly.");
                 accessRequestFault = true;
-            } else {
-                alert("Ja je mag bewegen");
             }
         })
     }
-
-    alert("tering kut app");
 }

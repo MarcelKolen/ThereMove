@@ -20,8 +20,6 @@ function movementToSoundPage() {
         soundEnabled = true;
 
         window.addEventListener("devicemotion", motionToSoundHandler);
-
-        alert("fuck you");
     } else {
         window.removeEventListener("devicemotion", motionToSoundHandler);
         synth.triggerRelease(now);
