@@ -24,7 +24,7 @@ $(document).on("input", "#max-speed", function () {
 });
 
 $(document).on("input", "#acceleration-amplifier", function () {
-    amplifier = parseInt($(this).val());
+    amplifier = parseFloat($(this).val());
 });
 
 $(document).on("input", "#deadzone", function () {
@@ -68,8 +68,8 @@ function posCap(poscap = 10) {
 }
 
 function standardMapping() {
-    v_x = v_x + a_x * a_i;
-    v_y = v_y + a_y * a_i;
+    v_x = v_x + a_x;
+    v_y = v_y + a_y;
 
     speedCap(maxSpeed);
 
@@ -87,8 +87,8 @@ function standardMapping() {
         }
     }
 
-    p_x = p_x + v_x * a_i;
-    p_y = p_y + v_y * a_i;
+    p_x = p_x + v_x;
+    p_y = p_y + v_y;
 
     posCap(10);
 }
