@@ -38,10 +38,8 @@ $(document).on("input", "#force-Speed-To-Zero-Factor", function () {
 $("#slider-force-Speed-To-Zero").click(function (e) {
     if ($(this).prop("checked")) {
         forceSpeedToZero = true;
-        alert("Gaat naar kut 0");
     } else {
         forceSpeedToZero = false;
-        alert("Gaat niet naar kut 0");
     }
 })
 
@@ -75,7 +73,7 @@ function standardMapping() {
 
     speedCap(maxSpeed);
 
-    if (forceSpeedToZero) {
+    if (forceSpeedToZero === true) {
         if (v_x > 0) {
             v_x = v_x - forceSpeedToZeroFactor;
         } else if (v_x < 0) {
