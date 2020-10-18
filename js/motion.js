@@ -99,6 +99,8 @@ function motionHandler(event) {
     a_x = event.acceleration.x;
     a_y = event.acceleration.y;
 
+    alert("a_x is now: " + a_x + " and a_y is now: " + a_y);
+
     if (deadzone !== 0) {
         if (Math.abs(a_x) < deadzone)
             a_x = 0;
